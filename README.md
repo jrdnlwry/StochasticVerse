@@ -18,11 +18,6 @@
 - 🧾 **Tokenization and Corpus Processing**: Clean and tokenize large poetic corpora.
 - 🔁 **Markov Chain Implementation**: Supports multiple n-gram depths.
 - 📊 **Entropy Analysis**: Quantifies output randomness using information theory.
-- 📈 **Visualization Tools**: Transition matrices, entropy histograms, and more.
-- 🧠 **Neural Model Benchmarking** *(optional)*: GPT-2 comparison using HuggingFace.
-- 🖼️ **Interactive Interface** *(optional)*: Web app via Streamlit or Gradio.
 
 ---
-
-## 📂 Project Structure
 
