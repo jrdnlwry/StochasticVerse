@@ -1,8 +1,6 @@
 # StochasticVerse
 
-## 🧠 Markov Muse: A Generative Poetry Engine
-
-**Markov Muse** is a generative poetry app that explores the intersection of probabilistic modeling, natural language processing, and creative language generation. Built using Markov Chains and optionally compared with neural language models, this project investigates how algorithmic structure can simulate poetic language.
+**Stochastic Verse** is a generative poetry app that explores the intersection of probabilistic modeling, natural language processing, and creative language generation. Built using Markov Chains and optionally compared with neural language models, this project investigates how algorithmic structure can simulate poetic language.
 
 ## ✨ Project Goals
 
