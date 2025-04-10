@@ -1,0 +1,6 @@
+# --- requirements.txt ---
+langchain
+langchain-community
+flask
+requests
+streamlit

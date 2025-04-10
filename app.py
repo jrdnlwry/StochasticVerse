@@ -1,12 +1,13 @@
 import streamlit as st
 import random
+import requests
 import numpy as np
 import pandas as pd
 import re
 import copy
 from collections import Counter
-from langchain_community.llms import Ollama
-from langchain import PromptTemplate, LLMChain
+# from langchain_community.llms import Ollama
+# from langchain import PromptTemplate, LLMChain
 
 # --- Utility Functions ---
 def clean_normalize(text):
@@ -51,6 +52,27 @@ def sentence_generator(start_token, norm_df):
         generated_text += " " + next_word
         current_word = next_word
     return generated_text
+
+def clean_poem_with_api(poem: str) -> str:
+    api_url = st.secrets.get("OLLAMA_API_URL", "http://localhost:5000/clean")
+    api_key = st.secrets.get("OLLAMA_API_KEY", "supersecret")
+    try:
+        response = requests.post(
+            api_url,
+            json={"poem": poem},
+            headers={"Authorization": f"Bearer {api_key}"},
+            timeout=10
+        )
+        if response.status_code == 200:
+            return response.json()["cleaned_poem"]
+        else:
+            return f"Error: {response.json().get('error', 'Unknown error')}"
+    except Exception as e:
+        return f"Connection error: {str(e)}"
+
+
+
+
 
 # --- Streamlit UI ---
 st.title("🎙️ StochasticVerse Poetry Generator")
@@ -108,19 +130,23 @@ if generate_clicked:
 
         st.subheader("🤖 Cleaned Final Poem")
         with st.spinner("Polishing with LLM..."):
-            llm = Ollama(model="mistral")
-            template = """
-                You are an editor for a poetry publishing house.
+            # llm = Ollama(model="mistral")
+            # template = """
+            #     You are an editor for a poetry publishing house.
 
-                Your task is to clean up the following poem by correcting grammar, adding punctuation, and improving coherence — but without altering the structure or line breaks.
+            #     Your task is to clean up the following poem by correcting grammar, adding punctuation, and improving coherence — but without altering the structure or line breaks.
 
-                Return **only** the revised version of the poem. Do not include any commentary, introductions, explanations, or formatting outside the poem itself.
+            #     Return **only** the revised version of the poem. Do not include any commentary, introductions, explanations, or formatting outside the poem itself.
 
-                Poem:
-                {poem}
-            """
-            prompt = PromptTemplate.from_template(template)
-            chain = LLMChain(llm=llm, prompt=prompt)
-            response = chain.run(poem=paragraph)
+            #     Poem:
+            #     {poem}
+            # """
+            # prompt = PromptTemplate.from_template(template)
+            # chain = LLMChain(llm=llm, prompt=prompt)
+            # response = chain.run(poem=paragraph)
+
+            # Replace the old chain.run() call with this:
+            response = clean_poem_with_api(paragraph)
+
             st.success("Done!")
             st.text_area("Final Output:", response.strip(), height=300)
