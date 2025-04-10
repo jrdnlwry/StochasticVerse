@@ -64,7 +64,7 @@ def clean_poem_with_api(poem: str) -> str:
             api_url,
             json={"poem": poem},
             headers={"Authorization": f"Bearer {api_key}"},
-            timeout=10
+            timeout=45
         )
         if response.status_code == 200:
             return response.json()["cleaned_poem"]
