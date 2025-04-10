@@ -54,8 +54,11 @@ def sentence_generator(start_token, norm_df):
     return generated_text
 
 def clean_poem_with_api(poem: str) -> str:
-    api_url = st.secrets.get("OLLAMA_API_URL", "http://localhost:5000/clean")
-    api_key = st.secrets.get("OLLAMA_API_KEY", "supersecret")
+    #api_url = st.secrets.get("OLLAMA_API_URL", "http://localhost:5000/clean")
+    #api_key = st.secrets.get("OLLAMA_API_KEY", "supersecret")
+    api_url = st.secrets.get["OLLAMA_API_URL"]
+    api_key = st.secrets["OLLAMA_API_KEY"]
+
     try:
         response = requests.post(
             api_url,
